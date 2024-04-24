@@ -4,6 +4,8 @@ import compress from "compression";
 import bodyParser from "body-parser";
 import { Controller } from "../controllers/controller";
 import { connectToDatabase } from '../services/database.service'
+import cors from 'cors'
+import { corsOptions } from "../services/cors.service";
 
 export class Server {
   private server = express();
@@ -45,6 +47,8 @@ export class Server {
   private initaliseAuthServices(): void {}
 
   private initaliseControllers(controllers?: Controller[]): void {
+    this.server.use(cors(corsOptions))
+
     controllers?.forEach((controller: Controller) => {
       controller.initaliseRoutes();
       this.server.use(controller.path, controller.router);
