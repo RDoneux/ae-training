@@ -14,7 +14,7 @@ export async function connectToDatabase(controllers?: Controller[]): Promise<voi
     return;
   }
   const client: MongoClient = new MongoClient(connectionString);
-  const db: Db = client.db("products");
+  const db: Db = client.db("test_db");
 
   controllers?.forEach((controller: Controller) => {
     collections[controller.collection] = db.collection(controller.collection);
