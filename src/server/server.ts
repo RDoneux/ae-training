@@ -8,6 +8,8 @@ import { debug, expressDebug } from "../services/debug.service";
 import { tokenAuth } from "../authorisation/tokens.auth";
 import { requireAuth } from "../authorisation/basic.auth";
 import { TokenController } from "../controllers/token/token.controller";
+import { corsOptions } from "../services/cors.service";
+import cors from "cors";
 
 export class Server {
   private server = express();
@@ -39,6 +41,7 @@ export class Server {
   }
 
   private initaliseUtilServices(): void {
+    this.server.use(cors(corsOptions));
     this.server.use(expressDebug);
     this.server.use(compress());
     this.server.use(bodyParser.urlencoded({ extended: true }));
