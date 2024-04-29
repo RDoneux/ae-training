@@ -26,7 +26,7 @@ export class DataController implements Controller {
 
   postExampleData = async (request: Request, response: Response) => {
     try {
-      const body = request.body.map((item: any) => ({ updateOne: { filter: { id: item.id }, update: { $set: { item } }, upsert: true } } ));
+      const body = request.body.map((item: any) => ({ updateOne: { filter: { id: item.id }, update: { $set: item }, upsert: true } } ));
       console.log(body)
       const result = await collections[this.collection].bulkWrite(body);
       result
