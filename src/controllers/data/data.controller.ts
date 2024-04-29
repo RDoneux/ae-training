@@ -26,10 +26,10 @@ export class DataController implements Controller {
 
   postExampleData = async (request: Request, response: Response) => {
     try {
-      const body = request.body.map((item: any) => ({ updateOne: { filter: { id: item.id }, update: { $set: { checked: item.checked } } } }));
+      const body = request.body.map((item: any) => ({ updateOne: { filter: { id: item.id }, update: { $set: { checked: item.checked } }, options: { upsert: true } } }));
       const result = await collections[this.collection].bulkWrite(body);
       result
-        ? response.status(201).send({ data: { itemsModified: result.modifiedCount, itemsFound: result.matchedCount } })
+        ? response.status(201).send({ data: { itemsModified: result.modifiedCount, itemsFound: result.matchedCount, itemsInserted: result.upsertedCount } })
         : response.status(400).send({ data: "Failed to fetch data" });
     } catch (error: any) {
       response.status(500).send({ data: error.message });
