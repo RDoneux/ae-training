@@ -11,8 +11,8 @@ export class DataController implements Controller {
     // GET
     this.router.get("/", this.getExampleData);
 
-    // POST
-    this.router.post("/", this.postExampleData);
+    // PUT
+    this.router.put("/", this.putExampleData);
   }
 
   getExampleData = async (request: Request, response: Response) => {
@@ -24,7 +24,7 @@ export class DataController implements Controller {
     }
   };
 
-  postExampleData = async (request: Request, response: Response) => {
+  putExampleData = async (request: Request, response: Response) => {
     try {
       const body = request.body.map((item: any) => ({ updateOne: { filter: { id: item.id }, update: { $set: item }, upsert: true } } ));
       console.log(body)
