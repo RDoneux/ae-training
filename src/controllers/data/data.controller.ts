@@ -17,7 +17,7 @@ export class DataController implements Controller {
 
   getExampleData = async (request: Request, response: Response) => {
     try {
-      const result = await collections[this.collection].find({}).toArray();
+      const result = await collections[this.collection].find({}).limit(200).toArray();
       result ? response.status(200).send({ data: result }) : response.status(400).send({ data: "Failed to fetch data" });
     } catch (error: any) {
       response.status(500).send({ data: error.message });
